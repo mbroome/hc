@@ -1,0 +1,260 @@
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+.st-selected{
+   background: #216eff !important;
+   color: white !important;
+}
+
+.st-selected-disable{
+   background: white !important;
+   color: black !important;
+}
+
+.no-gutters > [class*='col-'] {
+    padding-right:0;
+    padding-left:0;
+}
+
+.row-striped:nth-of-type(odd){
+  background-color: #eeeeee;
+}
+
+.row-striped:nth-of-type(even){
+  background-color: #ffffff;
+}
+
+.panel-vertical-pad{
+  margin-top: 0px;
+  margin-bottom: 0px
+}
+
+/* change the color of the environment accordion header */
+.panel-default > .panel-heading-env {
+   background: #acacac;
+   color: #fff; 
+   padding: 10px 15px;
+   border-bottom: 1px solid transparent;
+   border-top-right-radius: 3px;
+   border-top-left-radius: 3px;
+}
+
+/* change the color of the service accordion header */
+.panel-default > .panel-heading-service {
+   /*background: #0000aa;*/
+   background: #00aa00;
+   color: #fff;
+   padding: 10px 15px;
+   border-bottom: 1px solid transparent;
+   border-top-right-radius: 3px;
+   border-top-left-radius: 3px;
+}
+
+/* change the color of the service accordion header */
+.panel-default > .panel-heading-service-not-running {
+   background: #770000;
+   color: #fff;
+   padding: 10px 15px;
+   border-bottom: 1px solid transparent;
+   border-top-right-radius: 3px;
+   border-top-left-radius: 3px;
+}
+
+/* make the dropdown menu scrollable */
+.dropdown-menu{
+   max-height: 300px; /*Provide height in pixels or in other units as per your layout*/
+   overflow-y: auto; /*Provide an auto overflow to display scroll*/
+}
+
+.dropdown-menu-active {
+   background: #337ab7;
+   color: #fff;
+}
+
+/* change the color of a label and make the cursor change to a hand */
+.label-link {
+   cursor: pointer;
+   color: #337ab7;
+}
+
+/* set the width of the lockerbox edit popup window */
+.lockerbox-edit-window .modal-dialog {
+   width: 1200px;
+}
+
+/* set the width of the tooltip */
+.tooltip-inner {
+   max-width: 500px; //the minimum width
+}
+
+/* service variable bucket title bar */
+.panel-default > .panel-heading-servicevariable {
+   background: #acaccc;
+   color: #fff;
+   padding: 5px 5px;
+   border-bottom: 1px solid transparent;
+   border-top-right-radius: 3px;
+   border-top-left-radius: 3px;
+}
+
+/* hight of table contents in service variables editor */
+.service-variables {
+   padding: 1px !important;
+   margin-left: 5px !important;
+   margin-right: 5px !important;
+/*   margin-bottom: 1px; */
+   vertical-align: middle !important;
+}
+
+/* set the width of the field to the max */
+.wide-input-field {
+   width: 100%;
+}
+
+/* set the width of the field to 50% */
+.half-input-field {
+   width: 50%;
+}
+
+/* change the color of the bucket line in the list of service variables */
+.service-variables-bucket {
+   background: #cccca3;
+   padding: 5px;
+}
+
+/* get rid of some space at the bottom of a panel group */
+.panel-group {
+   margin-bottom: 5px;
+}
+
+/* shrink the padding around a panel body */
+.panel-body {
+   margin-bottom: 5px;
+   padding: 5px;
+}
+
+/* virtical align */
+.text-top {
+   vertical-align: top !important;
+}
+
+/* when a variable changes, change the background of the field */
+.service-variables-changed {
+   background: #ff9999;
+}
+
+/* when a variable is deleted, change the background of the field */
+.service-variables-deleted {
+   background: #ff0000;
+}
+
+/* deal with fatty tooltips */
+.tooltip-inner {
+    max-width: 350px;
+    /* If max-width does not work, try using width instead */
+    width: 350px; 
+}
+
+/* vertical center */
+.v-center {
+   vertical-align: middle !important;
+}
+
+/* horizontal center */
+.h-center {
+   text-align: center !important;
+}
+
+/* change the mouse to a pointer */
+.mouse-pointer {
+   cursor: pointer;
+}
+
+/* service variable level colors */
+.service-variables-level-application {
+   background: #ccfff5;
+}
+
+.service-variables-level-planet {
+   background: #e6f5fa;
+}
+
+.service-variables-level-continent {
+   background: #b6f5f5;
+}
+
+.service-variables-level-shared {
+   background: #e6f5fa;
+}
+
+.service-variables-level-class {
+   background: #b6f5f5;
+}
+
+/* service variable region colors */
+.service-variables-region-terminus2 {
+   background: #ffe6ff;
+}
+
+.service-variables-region-equinix2 {
+   background: #f5e6ff;
+}
+
+.service-variables-region-us-east {
+   background: #ffe6ff;
+}
+
+.service-variables-region-us-east-1 {
+   background: #ffe6ff;
+}
+
+/* default size for a select button */
+.select-button-default {
+    min-width: 5em;
+/*    max-width: 16em; */
+    min-height: 33px;
+/*    max-height: 33px; */
+}
+
+
+.loadbalancer-list {
+   padding: 0px !important;
+   margin-bottom: 0px !important;
+}
+
+.loadbalancer-address-list {
+   padding: 1px !important;
+}
+

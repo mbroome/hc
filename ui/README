@@ -1,0 +1,24 @@
+You will need nodejs installed.
+
+Then do:
+
+npm start
+
+That should download the nodejs module deps and start a nodejs server
+to serve the static content.
+
+For now, when you change a javascript file or add new ones under the
+modules directory, stop the running app.  Then start it back up with
+npm start.  This will make gulp regenerate the app.js from all of the
+javascript under the modules dir.
+
+If you need to add additional nodejs modules, add them to package.json.
+Then do a <script> include in the top level index.html to load the module
+from the node_modules directory.  Then you can go about using it like
+normal.
+
+
+Sprites: 
+source: http://www.famfamfam.com/lab/icons/silk/
+sprite generator: http://css.spritegen.com/
+

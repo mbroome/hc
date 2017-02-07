@@ -1,0 +1,32 @@
+{
+   "name": "hc",
+   "version": "0.1.0",
+   "description": "A starter project for AngularJS",
+   "devDependencies": {
+      "http-server": "*",
+      "angular": "*",
+      "angular-route": "*",
+      "angular-loader": "*",
+      "angular-mocks": "*",
+      "angular-base64": "*",
+      "angular-local-storage": "*",
+      "angular-animate": "*",
+      "angular-sanitize": "*",
+
+      "gulp": "*",
+      "gulp-concat": "*",
+      "gulp-concat-sourcemap": "*",
+      "gulp-ng-annotate": "*",
+      "gulp-sourcemaps": "*",
+      "gulp-cache-bust": "*",
+      "gulp-angular-templatecache": "*",
+      "gulp-rename": "*",
+      "gulp-uglify": "*",
+
+      "jshint": "*"
+   },
+   "scripts": {
+      "prestart": "npm install; node node_modules/gulp/bin/gulp.js",
+      "start": "http-server -p 8000 -c-1"
+   }
+}
