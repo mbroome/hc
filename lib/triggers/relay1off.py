@@ -17,12 +17,12 @@ config = {'sensor': '8:0'}
 def run(args):
    state = controller.state.Controller(args)
 
-   logger.info('trigger data in relay1off: %s' % json.dumps(args))
+   #logger.info('trigger data in relay1off: %s' % json.dumps(args))
    if args['value']:
       logger.info('trigger should disable relay') 
 
-   r = state.post({'nodeid': args['nodeid'], 'childid': args['childid'], 'state': 0})
+      r = state.post({'nodeid': args['nodeid'], 'childid': args['childid'], 'state': 0})
 
-   pp.pprint(r)
+      #pp.pprint(r)
 
 

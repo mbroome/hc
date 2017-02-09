@@ -22,6 +22,7 @@ class Config():
    def __init__(self):
       self.installDir = os.path.dirname(__file__) + '/../'
       self.configDir = '/etc/config/hc/'
+      self.logRootDir = ''
 
    def load(self):
       self.State()

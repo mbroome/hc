@@ -14,6 +14,8 @@ import infrastructure.queuelisten
 import interface.healthcheck
 import interface.state
 import interface.devices
+import interface.scene
+import interface.logs
 
 logger = logging.getLogger('hc')
    
@@ -51,6 +53,23 @@ def setupRoutes(disableConfigLoader=False):
    mapper.connect('devices',
                   '/api/devices',
                   controller=interface.devices.DevicesHandler)
+
+
+   mapper.connect('scene exec',
+                  '/api/scene/{scene}',
+                  controller=interface.scene.SceneExecHandler)
+
+   mapper.connect('scene list',
+                  '/api/scene',
+                  controller=interface.scene.SceneListHandler)
+
+   mapper.connect('logs x lines',
+                  '/api/logs/lines/{lines}',
+                  controller=interface.logs.LogsHandler)
+
+   mapper.connect('logs',
+                  '/api/logs',
+                  controller=interface.logs.LogsHandler)
 
    # healthcheck route
    mapper.connect('healthcheck',

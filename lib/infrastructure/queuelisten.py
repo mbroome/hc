@@ -34,7 +34,7 @@ class QueueListen():
    def triggerLookup(self, sensor):
       for t in triggers.triggers:
          if triggers.triggers[t].config['sensor'] == sensor:
-            logger.info('found a matching trigger: %s' % sensor)
+            #logger.info('found a matching trigger: %s' % sensor)
             triggers.triggers[t].run(self.state[sensor])
 
    def parse(self, topic, v):
