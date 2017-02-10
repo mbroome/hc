@@ -25,7 +25,7 @@ class Controller():
    ###############################################################
    def get(self, requestConfig={}):
       filename = application.Config.logRootDir + '/hc.log'
-      response = {}
+      response = []
 
       lines = 20
       if requestConfig.has_key('lines'):
@@ -43,7 +43,13 @@ class Controller():
 
          fd.close()
 
-         response = buffer
+         for line in buffer:
+            try:
+               t = line[:10]
+               d = line[12:]
+               response.append({'time': t, 'data': d})
+            except:
+               pass
 
       except Exception, e:
          pp.pprint(e)

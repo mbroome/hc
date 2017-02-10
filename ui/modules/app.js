@@ -21,6 +21,8 @@ var app = angular.module('app', [
    'hc.Factories.InputBox',
    'hc.Factories.StateClient',
    'hc.Factories.DevicesClient',
+   'hc.Factories.LogsClient',
+   'hc.Factories.ScenesClient',
 ]);
 
 

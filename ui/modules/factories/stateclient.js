@@ -4,7 +4,7 @@ angular
       ['$http', '$interval',
       function StateClient($http, $interval) {
          var StateClient = {};
-         StateClient.hostname = 'http://192.168.1.79:8080/api';
+         StateClient.hostname = '/api';
          
 
          ///////////////////////////////////////////////////////////////////
@@ -60,9 +60,9 @@ angular
 
          StateClient.get(function(o){
             $interval(function(){ 
-                                   //console.log('update stateclient from interval');
+                                   console.log('update stateclient from interval');
                                    StateClient.get(); 
-                                }, 60000*5);
+                                }, 60000*3);
          });
    
          return(StateClient);

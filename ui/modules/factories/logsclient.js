@@ -1,23 +1,23 @@
 angular
-   .module('hc.Factories.DevicesClient', [])
-   .factory('DevicesClient',
+   .module('hc.Factories.LogsClient', [])
+   .factory('LogsClient',
       ['$http', '$interval',
-      function DevicesClient($http, $interval) {
-         var DevicesClient = {};
-         DevicesClient.hostname = '/api';
+      function LogsClient($http, $interval) {
+         var LogsClient = {};
+         LogsClient.hostname = '/api';
          
 
          ///////////////////////////////////////////////////////////////////
          // make a unix timestamp
-         DevicesClient.now = function(){
+         LogsClient.now = function(){
             return(Math.floor(Date.now() / 1000));
          };
    
          // do a http get of cumulus
-         DevicesClient.get = function(callback){
+         LogsClient.get = function(callback){
             var s = this;
 
-            var url = DevicesClient.hostname + '/devices';
+            var url = LogsClient.hostname + '/logs';
             $http.get(url)
                // success
                .then(function(response) {
@@ -34,14 +34,14 @@ angular
                });
          };
    
-         DevicesClient.get(function(o){
-            $interval(function(){
-                                   console.log('update devicesclient from interval');
-                                   DevicesClient.get();
-                                }, 60000*3);
+         LogsClient.get(function(o){
+            $interval(function(){ 
+                                   console.log('update logsclient from interval');
+                                   LogsClient.get(); 
+                                }, 60000*5);
          });
-
-         return(DevicesClient);
+   
+         return(LogsClient);
    
       }
    ]);

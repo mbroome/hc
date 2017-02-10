@@ -19,7 +19,7 @@ def run(args):
 
    #logger.info('trigger data in relay1off: %s' % json.dumps(args))
    if args['value']:
-      logger.info('trigger should disable relay') 
+      logger.info('trigger: %s: should disable relay' % __name__) 
 
       r = state.post({'nodeid': args['nodeid'], 'childid': args['childid'], 'state': 0})
 

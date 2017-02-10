@@ -21,6 +21,8 @@ var app = angular.module('app', [
    'hc.Factories.InputBox',
    'hc.Factories.StateClient',
    'hc.Factories.DevicesClient',
+   'hc.Factories.LogsClient',
+   'hc.Factories.ScenesClient',
 ]);
 
 
@@ -43,7 +45,7 @@ angular
       ['$http', '$interval',
       function DevicesClient($http, $interval) {
          var DevicesClient = {};
-         DevicesClient.hostname = 'http://192.168.1.79:8080/api';
+         DevicesClient.hostname = '/api';
          
 
          ///////////////////////////////////////////////////////////////////
@@ -75,9 +77,9 @@ angular
    
          DevicesClient.get(function(o){
             $interval(function(){
-                                   //console.log('update devicesclient from interval');
+                                   console.log('update devicesclient from interval');
                                    DevicesClient.get();
-                                }, 60000*5);
+                                }, 60000*3);
          });
 
          return(DevicesClient);
@@ -152,12 +154,131 @@ angular
 
 
 angular
+   .module('hc.Factories.LogsClient', [])
+   .factory('LogsClient',
+      ['$http', '$interval',
+      function LogsClient($http, $interval) {
+         var LogsClient = {};
+         LogsClient.hostname = '/api';
+         
+
+         ///////////////////////////////////////////////////////////////////
+         // make a unix timestamp
+         LogsClient.now = function(){
+            return(Math.floor(Date.now() / 1000));
+         };
+   
+         // do a http get of cumulus
+         LogsClient.get = function(callback){
+            var s = this;
+
+            var url = LogsClient.hostname + '/logs';
+            $http.get(url)
+               // success
+               .then(function(response) {
+                  s.data = response.data.data;
+                  if(callback){
+                     callback(response.data.data);
+                  }
+               },
+               // error
+               function(response){
+                  if(callback){
+                     callback(response.data);
+                  }
+               });
+         };
+   
+         LogsClient.get(function(o){
+            $interval(function(){ 
+                                   console.log('update logsclient from interval');
+                                   LogsClient.get(); 
+                                }, 60000*5);
+         });
+   
+         return(LogsClient);
+   
+      }
+   ]);
+   
+   
+
+angular
+   .module('hc.Factories.ScenesClient', [])
+   .factory('ScenesClient',
+      ['$http', '$interval',
+      function ScenesClient($http, $interval) {
+         var ScenesClient = {};
+         ScenesClient.hostname = '/api';
+         
+
+         ///////////////////////////////////////////////////////////////////
+         // make a unix timestamp
+         ScenesClient.now = function(){
+            return(Math.floor(Date.now() / 1000));
+         };
+   
+         ScenesClient.get = function(callback){
+            var s = this;
+
+            var url = ScenesClient.hostname + '/scene';
+            $http.get(url)
+               // success
+               .then(function(response) {
+                  s.data = response.data.data;
+                  if(callback){
+                     callback(response.data.data);
+                  }
+               },
+               // error
+               function(response){
+                  if(callback){
+                     callback(response.data);
+                  }
+               });
+         };
+   
+
+         ScenesClient.run = function(request, callback){
+            var s = this;
+
+            var url = ScenesClient.hostname + '/scene/' + request.scene;
+            $http.get(url)
+               // success
+               .then(function(response) {
+                  if(callback){
+                     callback(response.data.data);
+                  }
+               },
+               // error
+               function(response){
+                  if(callback){
+                     callback(response.data);
+                  }
+               });
+         };
+
+         ScenesClient.get(function(o){
+/*            $interval(function(){ 
+                                   //console.log('update stateclient from interval');
+                                   ScenesClient.get(); 
+                                }, 60000*5); */
+         });
+   
+         return(ScenesClient);
+   
+      }
+   ]);
+   
+   
+
+angular
    .module('hc.Factories.StateClient', [])
    .factory('StateClient',
       ['$http', '$interval',
       function StateClient($http, $interval) {
          var StateClient = {};
-         StateClient.hostname = 'http://192.168.1.79:8080/api';
+         StateClient.hostname = '/api';
          
 
          ///////////////////////////////////////////////////////////////////
@@ -213,9 +334,9 @@ angular
 
          StateClient.get(function(o){
             $interval(function(){ 
-                                   //console.log('update stateclient from interval');
+                                   console.log('update stateclient from interval');
                                    StateClient.get(); 
-                                }, 60000*5);
+                                }, 60000*3);
          });
    
          return(StateClient);
@@ -325,10 +446,12 @@ angular
 
 angular.module('hc.Home', [])
    .controller('HomeController',
-      ['StateClient', 'DevicesClient', '$scope', '$timeout', '$interval',
-      function(StateClient, DevicesClient, $scope, $timeout, $interval) {
+      ['ScenesClient', 'StateClient', 'DevicesClient', 'LogsClient', '$scope', '$timeout', '$interval',
+      function(ScenesClient, StateClient, DevicesClient, LogsClient, $scope, $timeout, $interval) {
          $scope.StateClient = StateClient;
          $scope.DevicesClient = DevicesClient;
+         $scope.LogsClient = LogsClient;
+         $scope.ScenesClient = ScenesClient;
 
          // whena button is pressed
          $scope.changeState = function(id){
@@ -342,11 +465,15 @@ angular.module('hc.Home', [])
          $scope.test = function(){
             console.log($scope.DevicesClient.data);
             console.log($scope.StateClient.data);
+            console.log($scope.LogsClient.data);
+            console.log($scope.ScenesClient.data);
          };
 
          // just update state
          $scope.updateState = function(){
-            $scope.StateClient.get(function(o){ });
+            $scope.StateClient.get(function(o){
+               $scope.LogsClient.get();
+            });
          };
 
          // update devices and state

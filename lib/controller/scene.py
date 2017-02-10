@@ -25,9 +25,9 @@ class Controller():
 
    ###############################################################
    def get(self, requestConfig={}):
-      response = {}
+      response = []
       for s in scenes.scenes:
-         response[s] = scenes.scenes[s].description
+         response.append({'id': s, 'description': scenes.scenes[s].description})
 
       return(response)
 
