@@ -7,6 +7,7 @@ import logging
 logger = logging.getLogger('hc.' + __name__)
    
 import triggers
+import infrastructure.workerpool
 
 stateFile = '/home/pi/paho-mqtt/state.json'
 devicesFile = '/home/pi/paho-mqtt/devices.json'
@@ -34,8 +35,9 @@ class QueueListen():
    def triggerLookup(self, sensor):
       for t in triggers.triggers:
          if triggers.triggers[t].config['sensor'] == sensor:
-            #logger.info('found a matching trigger: %s' % sensor)
-            triggers.triggers[t].run(self.state[sensor])
+            msg = self.state[sensor].copy()
+            msg['trigger'] = t
+            infrastructure.workerpool.Pool.add(msg, 'trigger')
 
    def parse(self, topic, v):
       #print topic

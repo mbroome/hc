@@ -10,6 +10,7 @@ import paho.mqtt.publish as publish
 
 import application
 import scenes
+import infrastructure.workerpool
 
 from infrastructure.exceptions import *
 
@@ -35,7 +36,7 @@ class Controller():
       response = {}
 
       if scenes.scenes.has_key(requestConfig['scene']):
-         response = scenes.scenes[requestConfig['scene']].run(requestConfig)
+         response = infrastructure.workerpool.Pool.add(requestConfig, 'scene')
 
       return(response)
 

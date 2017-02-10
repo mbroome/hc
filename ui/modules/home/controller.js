@@ -32,11 +32,15 @@
 
          // update devices and state
          $scope.update = function(){
-//console.log('update time');
             $scope.DevicesClient.get(function(o){
-//console.log(o);
                $scope.StateClient.get(function(o){ });
-//console.log(o);
+            });
+         };
+
+
+         $scope.runScene = function(sceneid){
+            $scope.ScenesClient.run(sceneid, function(o){
+               $timeout($scope.updateState, 5000);
             });
          };
 

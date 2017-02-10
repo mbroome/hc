@@ -32,10 +32,12 @@
                   <tr>
                      <th>Scene</th>
                      <th>Description</th>
+                     <th>Run</th>
                </thead>
                <tr ng-repeat="scenefield in ScenesClient.data | orderBy: 'id'">
                   <td>{{scenefield.id}}</td>
                   <td>{{scenefield.description}}</td>
+                  <td><div class="mouse-pointer sprite-24-accept" ng-click="$event.stopPropagation(); runScene(scenefield.id)"></div></td>
                </tr>
             </table>
 

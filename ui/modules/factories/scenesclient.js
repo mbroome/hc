@@ -34,10 +34,10 @@ angular
          };
    
 
-         ScenesClient.run = function(request, callback){
+         ScenesClient.run = function(sceneid, callback){
             var s = this;
 
-            var url = ScenesClient.hostname + '/scene/' + request.scene;
+            var url = ScenesClient.hostname + '/scene/' + sceneid;
             $http.get(url)
                // success
                .then(function(response) {

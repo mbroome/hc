@@ -17,6 +17,7 @@ scriptPath = os.path.realpath(os.path.dirname(sys.argv[0]))
 sys.path.append(scriptPath + '/../lib/')
 
 import application
+import infrastructure.workerpool
 
 logger = logging.getLogger('hc')
 
@@ -57,6 +58,7 @@ if __name__ == '__main__':
       logger.info('Started')
 
       application.Listener.listen()
+      infrastructure.workerpool.Pool.start()
 
       try:
          routeConfig = application.setupRoutes()

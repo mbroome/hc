@@ -239,10 +239,10 @@ angular
          };
    
 
-         ScenesClient.run = function(request, callback){
+         ScenesClient.run = function(sceneid, callback){
             var s = this;
 
-            var url = ScenesClient.hostname + '/scene/' + request.scene;
+            var url = ScenesClient.hostname + '/scene/' + sceneid;
             $http.get(url)
                // success
                .then(function(response) {
@@ -478,11 +478,15 @@ angular.module('hc.Home', [])
 
          // update devices and state
          $scope.update = function(){
-//console.log('update time');
             $scope.DevicesClient.get(function(o){
-//console.log(o);
                $scope.StateClient.get(function(o){ });
-//console.log(o);
+            });
+         };
+
+
+         $scope.runScene = function(sceneid){
+            $scope.ScenesClient.run(sceneid, function(o){
+               $timeout($scope.updateState, 5000);
             });
          };
 
