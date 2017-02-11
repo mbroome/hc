@@ -17,6 +17,11 @@ description = "Zone 1 water change"
 def run(args):
    state = controller.state.Controller(args)
 
-   logger.info('scene: %s: water change on zone 1: %s' % (__name__, json.dumps(args)))
+   logger.info('Scene: %s: %s' % (__name__, description))
 
+   r = state.post({'nodeid': 8, 'childid': 0, 'state': 1})
+
+   time.sleep(60*60)
+
+   r = state.post({'nodeid': 8, 'childid': 0, 'state': 0})
 

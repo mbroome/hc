@@ -16,6 +16,7 @@ config = {'sensor': '8:0'}
 
 def run(args):
    state = controller.state.Controller(args)
+   return(False)
 
    #logger.info('trigger data in relay1off: %s' % json.dumps(args))
    if args['value']:

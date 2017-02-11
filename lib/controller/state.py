@@ -33,6 +33,7 @@ class Controller():
 
       topic = 'mygateway1-in/%s/%s/1/0/2' % (requestConfig['nodeid'], requestConfig['childid'])
 
+      logger.info('State change (controller): nodeid: %s childid: %s state: %s' % (requestConfig['nodeid'], requestConfig['childid'], requestConfig['state']))
       r = publish.single(topic, requestConfig['state'], hostname="localhost")
 
 
