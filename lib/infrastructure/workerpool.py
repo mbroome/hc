@@ -46,7 +46,7 @@ class PoolManager():
       self.workerList = {}
 
    def start(self):
-      logger.info('workerpool started')
+      logger.info('#### Workerpool started')
       for i in range(self.poolSize):
          t = PoolWorker(i)
          t.daemon = True

@@ -55,7 +55,7 @@ if __name__ == '__main__':
    # if we are running in debug mode, do a simple start
    if args.debug:
       application.setupLogs('/tmp')
-      logger.info('Started')
+      logger.info('#### Started')
 
       application.Listener.listen()
       infrastructure.workerpool.Pool.start()
