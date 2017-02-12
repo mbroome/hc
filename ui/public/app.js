@@ -23,6 +23,7 @@ var app = angular.module('app', [
    'hc.Factories.DevicesClient',
    'hc.Factories.LogsClient',
    'hc.Factories.ScenesClient',
+   'hc.Factories.JobsClient',
 ]);
 
 
@@ -154,6 +155,56 @@ angular
 
 
 angular
+   .module('hc.Factories.JobsClient', [])
+   .factory('JobsClient',
+      ['$http', '$interval',
+      function JobsClient($http, $interval) {
+         var JobsClient = {};
+         JobsClient.hostname = '/api';
+         
+
+         ///////////////////////////////////////////////////////////////////
+         // make a unix timestamp
+         JobsClient.now = function(){
+            return(Math.floor(Date.now() / 1000));
+         };
+   
+         JobsClient.get = function(callback){
+            var s = this;
+
+            var url = JobsClient.hostname + '/jobs/status';
+            $http.get(url)
+               // success
+               .then(function(response) {
+                  s.data = response.data.data;
+                  if(callback){
+                     callback(response.data.data);
+                  }
+               },
+               // error
+               function(response){
+                  if(callback){
+                     callback(response.data);
+                  }
+               });
+         };
+   
+
+         JobsClient.get(function(o){
+            $interval(function(){ 
+                                   console.log('update jobsclient from interval');
+                                   JobsClient.get(); 
+                                }, 60000*5); 
+         });
+   
+         return(JobsClient);
+   
+      }
+   ]);
+   
+   
+
+angular
    .module('hc.Factories.LogsClient', [])
    .factory('LogsClient',
       ['$http', '$interval',
@@ -242,7 +293,7 @@ angular
          ScenesClient.run = function(sceneid, callback){
             var s = this;
 
-            var url = ScenesClient.hostname + '/scene/' + sceneid;
+            var url = ScenesClient.hostname + '/scene/run/' + sceneid;
             $http.get(url)
                // success
                .then(function(response) {
@@ -259,10 +310,10 @@ angular
          };
 
          ScenesClient.get(function(o){
-/*            $interval(function(){ 
-                                   //console.log('update stateclient from interval');
+            $interval(function(){ 
+                                   console.log('update scenesclient from interval');
                                    ScenesClient.get(); 
-                                }, 60000*5); */
+                                }, 60000*5); 
          });
    
          return(ScenesClient);
@@ -446,12 +497,13 @@ angular
 
 angular.module('hc.Home', [])
    .controller('HomeController',
-      ['ScenesClient', 'StateClient', 'DevicesClient', 'LogsClient', '$scope', '$timeout', '$interval',
-      function(ScenesClient, StateClient, DevicesClient, LogsClient, $scope, $timeout, $interval) {
+      ['JobsClient', 'ScenesClient', 'StateClient', 'DevicesClient', 'LogsClient', '$scope', '$timeout', '$interval',
+      function(JobsClient, ScenesClient, StateClient, DevicesClient, LogsClient, $scope, $timeout, $interval) {
          $scope.StateClient = StateClient;
          $scope.DevicesClient = DevicesClient;
          $scope.LogsClient = LogsClient;
          $scope.ScenesClient = ScenesClient;
+         $scope.JobsClient = JobsClient;
 
          // whena button is pressed
          $scope.changeState = function(id){
@@ -467,12 +519,15 @@ angular.module('hc.Home', [])
             console.log($scope.StateClient.data);
             console.log($scope.LogsClient.data);
             console.log($scope.ScenesClient.data);
+            console.log($scope.JobsClient.data);
          };
 
          // just update state
          $scope.updateState = function(){
             $scope.StateClient.get(function(o){
-               $scope.LogsClient.get();
+               $scope.LogsClient.get(function(s){
+                  $scope.JobsClient.get();
+               });
             });
          };
 

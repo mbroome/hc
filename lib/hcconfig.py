@@ -39,7 +39,11 @@ class Config():
 
 
    def loadJSON(self, configFile):
-      contents = open(configFile, 'r').read()
-      data = json.loads(contents)
+      data = {}
+      try:
+         contents = open(configFile, 'r').read()
+         data = json.loads(contents)
+      except:
+         pass
       return(data)
 

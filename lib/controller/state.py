@@ -5,7 +5,6 @@ import base64
 import time
 import re
 
-import cherrypy
 import paho.mqtt.publish as publish
 
 import application

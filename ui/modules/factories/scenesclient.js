@@ -37,7 +37,7 @@ angular
          ScenesClient.run = function(sceneid, callback){
             var s = this;
 
-            var url = ScenesClient.hostname + '/scene/' + sceneid;
+            var url = ScenesClient.hostname + '/scene/run/' + sceneid;
             $http.get(url)
                // success
                .then(function(response) {
@@ -54,10 +54,10 @@ angular
          };
 
          ScenesClient.get(function(o){
-/*            $interval(function(){ 
-                                   //console.log('update stateclient from interval');
+            $interval(function(){ 
+                                   console.log('update scenesclient from interval');
                                    ScenesClient.get(); 
-                                }, 60000*5); */
+                                }, 60000*5); 
          });
    
          return(ScenesClient);

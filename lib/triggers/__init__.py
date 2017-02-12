@@ -24,5 +24,4 @@ for module in modules:
       f, filename, desc = imp.find_module(module, [libPath])
       triggers[module] = imp.load_module(module, f, filename, desc)
 
-pp.pprint(triggers)
 

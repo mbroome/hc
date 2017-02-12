@@ -1,11 +1,12 @@
 ﻿angular.module('hc.Home', [])
    .controller('HomeController',
-      ['ScenesClient', 'StateClient', 'DevicesClient', 'LogsClient', '$scope', '$timeout', '$interval',
-      function(ScenesClient, StateClient, DevicesClient, LogsClient, $scope, $timeout, $interval) {
+      ['JobsClient', 'ScenesClient', 'StateClient', 'DevicesClient', 'LogsClient', '$scope', '$timeout', '$interval',
+      function(JobsClient, ScenesClient, StateClient, DevicesClient, LogsClient, $scope, $timeout, $interval) {
          $scope.StateClient = StateClient;
          $scope.DevicesClient = DevicesClient;
          $scope.LogsClient = LogsClient;
          $scope.ScenesClient = ScenesClient;
+         $scope.JobsClient = JobsClient;
 
          // whena button is pressed
          $scope.changeState = function(id){
@@ -21,12 +22,15 @@
             console.log($scope.StateClient.data);
             console.log($scope.LogsClient.data);
             console.log($scope.ScenesClient.data);
+            console.log($scope.JobsClient.data);
          };
 
          // just update state
          $scope.updateState = function(){
             $scope.StateClient.get(function(o){
-               $scope.LogsClient.get();
+               $scope.LogsClient.get(function(s){
+                  $scope.JobsClient.get();
+               });
             });
          };
 

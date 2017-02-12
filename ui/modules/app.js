@@ -23,6 +23,7 @@ var app = angular.module('app', [
    'hc.Factories.DevicesClient',
    'hc.Factories.LogsClient',
    'hc.Factories.ScenesClient',
+   'hc.Factories.JobsClient',
 ]);
 
 

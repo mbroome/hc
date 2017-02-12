@@ -21,7 +21,7 @@ def run(args):
 
    r = state.post({'nodeid': 8, 'childid': 0, 'state': 1})
 
-   time.sleep(60*60)
+   time.sleep(60*2)
 
    r = state.post({'nodeid': 8, 'childid': 0, 'state': 0})
 

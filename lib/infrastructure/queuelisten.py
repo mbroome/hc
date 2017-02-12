@@ -41,6 +41,7 @@ class QueueListen():
 
    def parse(self, topic, v):
       #print topic
+      #logger.info('incoming: %s => %s' % (topic, v))
       p = topic.split('/')
       try:
          value = float(v)
@@ -51,20 +52,32 @@ class QueueListen():
       k = '%s:%s' % (p[1], p[2])
       msgType = self.mySensorsMap['n2s']['mysensor_command'][p[3]]
    
-      #logger.info('%s => %s => %s' % (msgType, topic, v))
+      logger.info('%s => %s => %s => %s' % (msgType, topic, k, v))
    
       try:
          if msgType == 'C_PRESENTATION':
             if p[2] != '255':
-               self.devices['sensors'][k]['nodeid'] = p[1]
-               self.devices['sensors'][k]['childid'] = p[2]
-               self.devices['sensors'][k]['name'] = value
-               self.devices['sensors'][k]['type'] = p[5]
-               self.devices['sensors'][k]['time'] = time.time()
+               try:
+                  if not self.devices['sensors'].has_key(k):
+                     self.devices['sensors'][k] = {}
+
+                  self.devices['sensors'][k]['nodeid'] = p[1]
+                  self.devices['sensors'][k]['childid'] = p[2]
+                  self.devices['sensors'][k]['name'] = value
+                  self.devices['sensors'][k]['type'] = p[5]
+                  self.devices['sensors'][k]['time'] = time.time()
+               except Exception, e:
+                  logger.exception(e)
          elif msgType == 'C_INTERNAL':
+            if not self.devices['nodes'].has_key(p[1]):
+               self.devices['nodes'][p[1]] = {}
+
             self.devices['nodes'][p[1]][tmap[p[5]]] = value
             self.devices['nodes'][p[1]]['time'] = time.time()
          elif msgType == 'C_SET':
+            if not self.state.has_key(k):
+               self.state[k] = {}
+
             self.state[k]['id'] = k
             self.state[k]['nodeid'] = p[1]
             self.state[k]['childid'] = p[2]
@@ -107,13 +120,14 @@ class QueueListen():
    
    def save(self):
       #logger.info('saving queue data')
+      #pp.pprint(self.state)
       try:
          fd = open(stateFile, 'w')
          fd.write(json.dumps(self.state))
          fd.close()
       except:
          pass
-   
+      #pp.pprint(self.devices)
       try:
          fd = open(devicesFile, 'w')
          fd.write(json.dumps(self.devices))

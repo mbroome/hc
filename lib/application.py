@@ -16,6 +16,7 @@ import interface.state
 import interface.devices
 import interface.scene
 import interface.logs
+import interface.jobs
 
 logger = logging.getLogger('hc')
    
@@ -54,14 +55,17 @@ def setupRoutes(disableConfigLoader=False):
                   '/api/devices',
                   controller=interface.devices.DevicesHandler)
 
-
-   mapper.connect('scene exec',
-                  '/api/scene/{scene}',
+   mapper.connect('scene run',
+                  '/api/scene/run/{scene}',
                   controller=interface.scene.SceneExecHandler)
 
    mapper.connect('scene list',
                   '/api/scene',
                   controller=interface.scene.SceneListHandler)
+
+   mapper.connect('jobs status',
+                  '/api/jobs/status',
+                  controller=interface.jobs.JobsHandler)
 
    mapper.connect('logs x lines',
                   '/api/logs/lines/{lines}',

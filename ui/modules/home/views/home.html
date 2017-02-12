@@ -4,7 +4,7 @@
          <label class="btn btn-warning" ng-click="update()">Refresh</label>
       </div>
       <div class="row no-gutters">
-         <div class="col-lg-8">
+         <div class="col-lg-5">
             <div class="row no-gutters">
                <table class="table">
                   <thead>
@@ -51,11 +51,17 @@
                      <th>Scene</th>
                      <th>Description</th>
                      <th>Run</th>
+                     <th>Start</th>
                </thead>
                <tr ng-repeat="scenefield in ScenesClient.data | orderBy: 'id'">
                   <td>{{scenefield.id}}</td>
                   <td>{{scenefield.description}}</td>
                   <td><div class="mouse-pointer sprite-24-accept" ng-click="$event.stopPropagation(); runScene(scenefield.id)"></div></td>
+                  <td>
+                     <div ng-if="JobsClient.data.jobs[scenefield.id].time">
+                        {{JobsClient.data.jobs[scenefield.id].time  * 1000| date:'yyyy-MM-dd HH:mm:ss Z'}}
+                     </div>
+                  </td>
                </tr>
             </table>
          </div>
