@@ -12,7 +12,7 @@ import controller.state
 
 logger = logging.getLogger('hc.' + __name__)
 
-description = "Zone 1 water change"
+description = "Zone 2 water change"
 
 def run(args):
    state = controller.state.Controller(args)
@@ -23,14 +23,14 @@ def run(args):
    r = state.post({'nodeid': 6, 'childid': 6, 'state': 1})
    time.sleep(30)
 
-   # turn on zone 1
-   r = state.post({'nodeid': 6, 'childid': 1, 'state': 1})
+   # turn on zone 2
+   r = state.post({'nodeid': 6, 'childid': 2, 'state': 1})
 
    # wait a hour
    time.sleep(60*60)
 
-   # turn off zone 1
-   r = state.post({'nodeid': 6, 'childid': 1, 'state': 0})
+   # turn off zone 2
+   r = state.post({'nodeid': 6, 'childid': 2, 'state': 0})
    # and turn off the pump
    r = state.post({'nodeid': 6, 'childid': 6, 'state': 0})
 
