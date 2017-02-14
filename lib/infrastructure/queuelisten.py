@@ -52,7 +52,7 @@ class QueueListen():
       k = '%s:%s' % (p[1], p[2])
       msgType = self.mySensorsMap['n2s']['mysensor_command'][p[3]]
    
-      logger.info('%s => %s => %s => %s' % (msgType, topic, k, v))
+      #logger.info('%s => %s => %s => %s' % (msgType, topic, k, v))
    
       try:
          if msgType == 'C_PRESENTATION':
