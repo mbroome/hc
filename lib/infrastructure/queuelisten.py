@@ -26,11 +26,26 @@ class QueueListen():
       self.devices = RecursiveDict()
       self.mySensorsMap = {}
    
+      self.logSetup()
+
       self.client = mqtt.Client()
       self.client.on_connect = self.on_connect
       self.client.on_message = self.on_message
 
       self.load()
+
+
+   def logSetup(self):
+      self.qlogger = logging.getLogger('qlogger')
+
+      # setup the standard logger
+      hdlr = logging.FileHandler('/tmp/queue.log')
+      formatter = logging.Formatter('%(asctime)s: %(message)s', datefmt='%s')
+      hdlr.setFormatter(formatter)
+      self.qlogger.addHandler(hdlr)
+      self.qlogger.setLevel(logging.INFO)
+
+
 
    def triggerLookup(self, sensor):
       for t in triggers.triggers:
@@ -52,7 +67,7 @@ class QueueListen():
       k = '%s:%s' % (p[1], p[2])
       msgType = self.mySensorsMap['n2s']['mysensor_command'][p[3]]
    
-      #logger.info('%s => %s => %s => %s' % (msgType, topic, k, v))
+      self.qlogger.info('%s => %s => %s => %s' % (msgType, topic, k, v))
    
       try:
          if msgType == 'C_PRESENTATION':

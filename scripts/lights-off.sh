@@ -1,9 +1,5 @@
 #!/bin/sh
 
-F=`dirname $0`/../../bin/activate
-BINDIR=`dirname $0`/../bin
-
-. $F
-
-$BINDIR/onoff.py --sensor 6:0 --state off
+date >> /tmp/lights.log
+curl -XPOST -d "state=0" http://localhost:8080/api/state/nodeid/6/childid/0 >>/tmp/lights.log
 
