@@ -16,7 +16,10 @@ pp = pprint.PrettyPrinter(indent=4)
 
 logger = logging.getLogger('hc.' + __name__)
 
-stateMap = {'0': 'off', '1': 'on'}
+stateMap = {'0': 'off',
+            '1': 'on',
+             0: 'off',
+             1: 'on'}
 
 class Controller():
    def __init__(self, requestConfig={}):
