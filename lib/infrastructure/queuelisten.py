@@ -11,6 +11,7 @@ import infrastructure.workerpool
 
 stateFile = '/home/pi/paho-mqtt/state.json'
 devicesFile = '/home/pi/paho-mqtt/devices.json'
+overrideFile = '/home/pi/paho-mqtt/device-override.json'
 mySensorsFile = '/home/pi/paho-mqtt/mysensors-map.json'
    
    
@@ -24,6 +25,7 @@ class QueueListen():
    def __init__(self):
       self.state = RecursiveDict()
       self.devices = RecursiveDict()
+      self.overrides = RecursiveDict()
       self.mySensorsMap = {}
    
       self.logSetup()
@@ -78,9 +80,13 @@ class QueueListen():
 
                   self.devices['sensors'][k]['nodeid'] = p[1]
                   self.devices['sensors'][k]['childid'] = p[2]
-                  self.devices['sensors'][k]['name'] = value
                   self.devices['sensors'][k]['type'] = p[5]
                   self.devices['sensors'][k]['time'] = time.time()
+
+                  if self.overrides.has_key(str(value)):
+                     self.devices['sensors'][k]['name'] = self.overrides[str(value)]
+                  else:
+                     self.devices['sensors'][k]['name'] = value
                except Exception, e:
                   logger.exception(e)
          elif msgType == 'C_INTERNAL':
@@ -170,6 +176,12 @@ class QueueListen():
          self.devices = json.loads(content)
       except:
          pass
+      try:
+         content = open(overrideFile, 'r').read()
+         self.overrides = json.loads(content)
+      except:
+         pass
+
    
    def listen(self):
       #pp.pprint(triggers.triggers)

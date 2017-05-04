@@ -27,6 +27,7 @@ class Config():
    def load(self):
       self.State()
       self.Devices()
+      self.Overrides()
 
    # load up some configs
    def State(self):
@@ -36,6 +37,10 @@ class Config():
    def Devices(self):
       self.d = self.loadJSON('/home/pi/paho-mqtt/devices.json')
       return(self.d)
+
+   def Overrides(self):
+      self.o = self.loadJSON('/home/pi/paho-mqtt/device-overrides.json')
+      return(self.o)
 
 
    def loadJSON(self, configFile):
