@@ -37,7 +37,11 @@ class Controller():
 
       topic = 'mygateway1-in/%s/%s/1/0/2' % (requestConfig['nodeid'], requestConfig['childid'])
 
-      logger.info('State change (controller): nodeid: %s childid: %s state: %s' % (requestConfig['nodeid'], requestConfig['childid'], stateMap[requestConfig['state']]))
+      sensor = '%s:%s' % (requestConfig['nodeid'], requestConfig['childid'])
+      devices = application.Config.Devices()
+      name = devices['sensors'][sensor]['name']
+
+      logger.info('State change (controller): name: %s => sensor: %s state: %s' % (name, sensor, stateMap[requestConfig['state']]))
       r = publish.single(topic, requestConfig['state'], hostname="localhost")
 
 

@@ -20,17 +20,17 @@ def run(args):
    logger.info('Scene: %s: %s' % (__name__, description))
 
    # turn the pump on
-   r = state.post({'nodeid': 6, 'childid': 6, 'state': 1})
-   time.sleep(30)
+   #r = state.post({'nodeid': 6, 'childid': 6, 'state': 1})
+   #time.sleep(30)
 
    # turn on zone 5
    r = state.post({'nodeid': 8, 'childid': 1, 'state': 1})
 
    # wait a hour
-   time.sleep(60*60)
+   time.sleep(60*10)
 
    # turn off zone 5
    r = state.post({'nodeid': 8, 'childid': 1, 'state': 0})
    # and turn off the pump
-   r = state.post({'nodeid': 6, 'childid': 6, 'state': 0})
+   #r = state.post({'nodeid': 6, 'childid': 6, 'state': 0})
 

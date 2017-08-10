@@ -28,6 +28,8 @@ class QueueListen():
       self.overrides = RecursiveDict()
       self.mySensorsMap = {}
    
+      self.devices = {'nodes': {}, 'sensors': {}}
+
       self.logSetup()
 
       self.client = mqtt.Client()
