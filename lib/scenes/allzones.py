@@ -60,5 +60,5 @@ def run(args):
    r = state.post({'nodeid': 6, 'childid': 4, 'state': 0})
 
    logger.info('Scene OFF: %s: %s' % (__name__, description))
-   r = state.post({'nodeid': 6, 'childid': 5, 'state': 1})
+   r = state.post({'nodeid': 6, 'childid': 5, 'state': 0})
 
